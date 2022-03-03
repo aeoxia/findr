@@ -15,11 +15,12 @@ class LocalDataSourceImpl @Inject constructor(
     private val photoEntityToLocalDataMapper: PhotoEntityToLocalDataMapper
 ) : LocalDataSource {
 
-    override fun getPhotos(keyword: String): Flow<List<PhotoEntity>> {
-        return photoDao.getPhotos(keyword).map(photoDbEntityToDataMapper::mapList)
+    override fun getPhotos(): Flow<List<PhotoEntity>> {
+        return photoDao.getPhotos().map(photoDbEntityToDataMapper::mapList)
     }
 
     override fun persistPhotos(photos: List<PhotoEntity>) {
+        photoDao.deleteAll()
         photoDao.insert(photos.map(photoEntityToLocalDataMapper::map))
     }
 }

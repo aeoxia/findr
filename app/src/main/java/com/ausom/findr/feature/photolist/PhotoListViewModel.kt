@@ -21,17 +21,10 @@ class PhotoListViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _exceptionHandler = CoroutineExceptionHandler { _, _ ->  }
-    private val _searchKeyword = MutableStateFlow("kittens")
     val photos: StateFlow<List<PhotoDisplay>>
-        get() = getPhotos(_searchKeyword.value).map(photoToDisplayMapper::mapList).stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
-
-    init {
-        _searchKeyword.observe(this, _exceptionHandler) {
-            if(it.isNotEmpty()) searchPhotos(it).load(this, _exceptionHandler)
-        }
-    }
+        get() = getPhotos().map(photoToDisplayMapper::mapList).stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 
     fun search(keyword: String) {
-        _searchKeyword.value = keyword
+        searchPhotos(keyword).load(this, _exceptionHandler)
     }
 }

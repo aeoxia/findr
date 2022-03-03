@@ -2,6 +2,7 @@ package com.ausom.findr.feature.photolist
 
 import android.os.Bundle
 import android.view.View
+import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.ausom.core.extension.observe
@@ -24,6 +25,19 @@ class PhotoListFragment : Fragment(R.layout.fragment_photo_list)  {
         super.onViewCreated(view, savedInstanceState)
         with(_binding) {
             rvPhotoList.adapter = adapter
+            searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(input: String?): Boolean {
+                    if(!input.isNullOrEmpty()) {
+                        _viewModel.search(input)
+                        return true
+                    }
+                    return false
+                }
+
+                override fun onQueryTextChange(input: String?): Boolean {
+                    return false
+                }
+            })
         }
         with(_viewModel) {
             photos.observe(this@PhotoListFragment) {

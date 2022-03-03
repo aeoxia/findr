@@ -10,13 +10,12 @@ import javax.inject.Inject
 class GetPhotos @Inject constructor(
     postExecutionThread: PostExecutionThread,
     private val repository: FindrRepository
-): BaseUseCase<String, List<Photo>>(postExecutionThread.io) {
+): BaseUseCase<Unit, List<Photo>>(postExecutionThread.io) {
 
     /**
-     * Gets all photos locally using the given [param]
+     * Gets all photos locally stored
      */
-    override fun execute(param: String?): Flow<List<Photo>> {
-        val keyword = param!!
-        return repository.getPhotos(keyword)
+    override fun execute(param: Unit?): Flow<List<Photo>> {
+        return repository.getPhotos()
     }
 }

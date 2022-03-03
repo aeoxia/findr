@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
  * */
 interface LocalDataSource {
 
-    fun getPhotos(keyword: String): Flow<List<PhotoEntity>>
+    fun getPhotos(): Flow<List<PhotoEntity>>
 
     fun persistPhotos(photos: List<PhotoEntity>)
 
