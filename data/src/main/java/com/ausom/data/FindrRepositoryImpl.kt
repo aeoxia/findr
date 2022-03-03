@@ -19,7 +19,7 @@ class FindrRepositoryImpl @Inject constructor(
 
     override fun searchPhotos(keyword: String): Flow<Unit> = flow {
         val photos = remoteDataSource.searchPhotos(keyword)
-        localDataSource.persistPhotos(photos)
+        localDataSource.persistPhotos(photos.map { it.copy(keyword = keyword) })
         emit(Unit)
     }
 }

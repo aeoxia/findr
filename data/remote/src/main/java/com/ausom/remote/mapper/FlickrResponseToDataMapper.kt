@@ -19,7 +19,8 @@ class FlickrResponseToDataMapper @Inject constructor() : OneWayMapper<FlickrResp
                         server = server?: "",
                         id = id?: "",
                         secret = secret?: ""
-                    )
+                    ),
+                    keyword = ""
                 )
             }
         }

@@ -1,6 +1,9 @@
 package com.ausom.local.dao
 
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
 import com.ausom.local.model.PhotoDbEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -11,5 +14,5 @@ interface PhotoDao {
     fun getPhotos(keyword: String): Flow<List<PhotoDbEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(vararg PhotoDbEntity: PhotoDbEntity)
+    fun insert(photoDbEntity: List<PhotoDbEntity>)
 }
