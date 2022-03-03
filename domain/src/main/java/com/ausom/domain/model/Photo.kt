@@ -1,7 +1,7 @@
 package com.ausom.domain.model
 
 data class Photo(
-    val id: Int,
+    val id: String,
     val title: String,
     val image: String,
 )
