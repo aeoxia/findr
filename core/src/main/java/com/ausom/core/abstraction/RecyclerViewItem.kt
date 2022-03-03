@@ -9,5 +9,5 @@ import com.ausom.core.utility.DefaultDiffUtil
  *
  */
 abstract class RecyclerViewItem {
-    abstract val id: Number
+    abstract val id: Any
 }
