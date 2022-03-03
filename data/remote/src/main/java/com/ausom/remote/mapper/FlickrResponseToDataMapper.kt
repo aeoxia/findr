@@ -12,15 +12,14 @@ class FlickrResponseToDataMapper @Inject constructor() : OneWayMapper<FlickrResp
         return photos.map { photo ->
             with(photo) {
                 PhotoEntity(
-                    id = id?: "",
-                    title = title?: "",
+                    id = 0,
+                    title = title ?: "",
                     image = buildImageUrl(
-                        farm = farm?: 0,
-                        server = server?: "",
-                        id = id?: "",
-                        secret = secret?: ""
+                        farm = farm ?: 0,
+                        server = server ?: "",
+                        id = id ?: "",
+                        secret = secret ?: ""
                     ),
-                    keyword = ""
                 )
             }
         }

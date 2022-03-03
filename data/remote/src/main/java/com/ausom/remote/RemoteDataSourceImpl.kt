@@ -10,9 +10,8 @@ class RemoteDataSourceImpl @Inject constructor(
     private val flickrResponseToDataMapper: FlickrResponseToDataMapper
 ) : RemoteDataSource {
 
-    override suspend fun searchPhotos(keyword: String): List<PhotoEntity> {
-        //TODO replace this when pagination is applied
-        val response = service.getImages(keyword, 1)
+    override suspend fun searchPhotos(keyword: String, page: Int): List<PhotoEntity> {
+        val response = service.getImages(keyword, page)
         return flickrResponseToDataMapper.map(response)
     }
 }

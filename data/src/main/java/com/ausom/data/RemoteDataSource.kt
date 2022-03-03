@@ -7,6 +7,6 @@ import com.ausom.data.model.PhotoEntity
  * */
 interface RemoteDataSource {
 
-    suspend fun searchPhotos(keyword: String) : List<PhotoEntity>
+    suspend fun searchPhotos(keyword: String, page: Int): List<PhotoEntity>
 
 }
