@@ -1,5 +1,6 @@
 package com.ausom.findr.feature.photolist
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
@@ -26,7 +27,7 @@ class PhotoListAdapter @Inject constructor(): ListAdapter<PhotoDisplay, PhotoLis
             getItem(position).let { photo ->
                 with(_binding) {
                     txtTitle.text = photo.title
-                    imgPhoto.load(photo.url)
+                    imgPhoto.load(photo.image)
                 }
             }
         }

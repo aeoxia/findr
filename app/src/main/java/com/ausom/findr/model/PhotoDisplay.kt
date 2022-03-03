@@ -4,6 +4,6 @@ import com.ausom.core.abstraction.RecyclerViewItem
 
 data class PhotoDisplay(
     override val id: String,
-    val url: String,
+    val image: String,
     val title: String
 ) : RecyclerViewItem()
