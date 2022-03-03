@@ -5,8 +5,10 @@ import kotlinx.coroutines.flow.Flow
 
 interface FindrRepository {
 
-    fun getPhotos() : Flow<List<Photo>>
+    fun getPhotos(): Flow<List<Photo>>
 
-    fun searchPhotos(keyword: String) : Flow<Unit>
+    fun searchPhotos(keyword: String, page: Int): Flow<Unit>
+
+    fun loadMorePhotos(): Flow<Unit>
 
 }
