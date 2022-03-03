@@ -12,7 +12,6 @@ class PhotoEntityToLocalDataMapper @Inject constructor() : OneWayMapper<PhotoEnt
                 id = id,
                 title = title,
                 image = image,
-                keyword = keyword
             )
         }
     }

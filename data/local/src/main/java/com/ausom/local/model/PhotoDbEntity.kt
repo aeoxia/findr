@@ -5,8 +5,7 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class PhotoDbEntity(
-    @PrimaryKey val id: String,
+    @PrimaryKey(autoGenerate = true) val id: Int,
     val title: String,
     val image: String,
-    val keyword: String
 )

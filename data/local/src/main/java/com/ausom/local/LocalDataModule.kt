@@ -3,6 +3,7 @@ package com.ausom.local
 import android.content.Context
 import androidx.room.Room
 import com.ausom.data.LocalDataSource
+import com.ausom.local.dao.PageInfoDao
 import com.ausom.local.dao.PhotoDao
 import dagger.Binds
 import dagger.Module
@@ -22,8 +23,13 @@ interface LocalDataModule {
     companion object {
 
         @[Provides Singleton]
-        fun provideMovieDao(appDatabase: FindrDatabase): PhotoDao {
+        fun providePhotoDao(appDatabase: FindrDatabase): PhotoDao {
             return appDatabase.photoDao()
+        }
+
+        @[Provides Singleton]
+        fun providePageInfoDao(appDatabase: FindrDatabase): PageInfoDao {
+            return appDatabase.pageInfoDao()
         }
 
         @[Provides Singleton]

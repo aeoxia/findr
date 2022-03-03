@@ -12,7 +12,6 @@ class PhotoDbEntityToDataMapper @Inject constructor() : OneWayMapper<PhotoDbEnti
                 id = id,
                 title = title,
                 image = image,
-                keyword = keyword
             )
         }
     }
