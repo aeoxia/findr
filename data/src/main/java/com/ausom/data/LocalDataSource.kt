@@ -10,4 +10,6 @@ interface LocalDataSource {
 
     fun getPhotos(keyword: String): Flow<List<PhotoEntity>>
 
+    fun persistPhotos(photos: List<PhotoEntity>)
+
 }
