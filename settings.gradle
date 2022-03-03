@@ -8,3 +8,8 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Findr"
 include ':app'
+include ':core'
+include ':data'
+include ':domain'
+include ':data:local'
+include ':data:remote'
