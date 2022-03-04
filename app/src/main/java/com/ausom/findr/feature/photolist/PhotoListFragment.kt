@@ -8,6 +8,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ausom.core.extension.dpToPx
+import com.ausom.core.extension.hideKeyboard
 import com.ausom.core.extension.observe
 import com.ausom.core.extension.viewBinding
 import com.ausom.core.ui.GridSpacingItemDecoration
@@ -67,7 +68,6 @@ class PhotoListFragment : Fragment(R.layout.fragment_photo_list)  {
                 override fun onQueryTextSubmit(input: String?): Boolean {
                     if (!input.isNullOrEmpty()) {
                         _viewModel.search(input, 1)
-                        return true
                     }
                     return false
                 }
@@ -76,7 +76,14 @@ class PhotoListFragment : Fragment(R.layout.fragment_photo_list)  {
                     return false
                 }
             })
-
+            searchView.setOnSearchClickListener {
+                imgLogo.visibility = View.GONE
+            }
+            searchView.setOnCloseListener {
+                imgLogo.visibility = View.VISIBLE
+                hideKeyboard()
+                return@setOnCloseListener false
+            }
         }
         with(_viewModel) {
             photos.observe(this@PhotoListFragment) {
@@ -84,6 +91,13 @@ class PhotoListFragment : Fragment(R.layout.fragment_photo_list)  {
                     isListLoading = false
                 }
             }
+
+            _viewModel.search(DEFAULT_KEYWORD, 1)
         }
+    }
+
+    companion object {
+        //using this default search keyword as homepage
+        const val DEFAULT_KEYWORD = "flower"
     }
 }

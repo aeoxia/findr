@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/chefs_hat"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:background="@color/chefs_hat">
 
     <View
         android:id="@+id/bg_toolbar"
@@ -12,26 +12,38 @@
         android:layout_height="?attr/actionBarSize"
         android:background="@color/white"
         android:elevation="5dp"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/img_logo"
+        android:layout_width="100dp"
+        android:layout_height="42dp"
+        android:contentDescription="@string/app_name"
+        android:elevation="5dp"
+        android:src="@drawable/ic_findr"
+        app:layout_constraintBottom_toBottomOf="@id/bg_toolbar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/bg_toolbar" />
 
     <SearchView
         android:id="@+id/search_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:queryHint="Search android, cars, elephant"
-        app:layout_constraintTop_toTopOf="@id/bg_toolbar"
-        app:layout_constraintBottom_toBottomOf="@id/bg_toolbar"
+        android:elevation="5dp"
         android:layoutDirection="rtl"
-        android:elevation="5dp"/>
+        android:queryBackground="@android:color/transparent"
+        android:queryHint="Search android, cars, elephant"
+        app:layout_constraintBottom_toBottomOf="@id/bg_toolbar"
+        app:layout_constraintTop_toTopOf="@id/bg_toolbar" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_photo_list"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        tools:listitem="@layout/item_photo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/bg_toolbar"
         tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        tools:listitem="@layout/item_photo"
         tools:spanCount="3" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
