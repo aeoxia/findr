@@ -77,13 +77,9 @@ class PhotoListFragment : Fragment(R.layout.fragment_photo_list)  {
                     return false
                 }
             })
-            searchView.setOnSearchClickListener {
-                imgLogo.visibility = View.GONE
-            }
-            searchView.setOnCloseListener {
-                imgLogo.visibility = View.VISIBLE
-                hideKeyboard()
-                return@setOnCloseListener false
+
+            searchView.setOnQueryTextFocusChangeListener { _, hasFocus ->
+                imgLogo showIf !hasFocus
             }
         }
         with(_viewModel) {
