@@ -7,10 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.ausom.core.extension.dpToPx
-import com.ausom.core.extension.hideKeyboard
-import com.ausom.core.extension.observe
-import com.ausom.core.extension.viewBinding
+import com.ausom.core.extension.*
 import com.ausom.core.ui.GridSpacingItemDecoration
 import com.ausom.findr.R
 import com.ausom.findr.databinding.FragmentPhotoListBinding
@@ -25,7 +22,6 @@ class PhotoListFragment : Fragment(R.layout.fragment_photo_list)  {
 
     @Inject
     lateinit var adapter: PhotoListAdapter
-    var isListLoading = false
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -51,9 +47,8 @@ class PhotoListFragment : Fragment(R.layout.fragment_photo_list)  {
                                 totalItemCount = layoutManager.itemCount
                                 pastVisibleItems = layoutManager.findFirstVisibleItemPosition()
 
-                                if (!isListLoading) {
+                                if (_viewModel.pageState.value == PageState.Loading) {
                                     if (visibleItemCount + pastVisibleItems + offset >= totalItemCount) {
-                                        isListLoading = true
                                         _viewModel.loadMore()
                                     }
                                 }
@@ -86,13 +81,13 @@ class PhotoListFragment : Fragment(R.layout.fragment_photo_list)  {
             }
         }
         with(_viewModel) {
-            photos.observe(this@PhotoListFragment) {
-                adapter.submitList(it) {
-                    isListLoading = false
-                }
-            }
-
             _viewModel.search(DEFAULT_KEYWORD, 1)
+            photos.observe(this@PhotoListFragment) {
+                adapter.submitList(it)
+            }
+            pageState.observe(this@PhotoListFragment) { state ->
+                _binding.viewLoading showIf (state == PageState.Loading)
+            }
         }
     }
 

@@ -11,10 +11,8 @@ import com.ausom.findr.mapper.PhotoToDisplayMapper
 import com.ausom.findr.model.PhotoDisplay
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -25,13 +23,21 @@ class PhotoListViewModel @Inject constructor(
     private val photoToDisplayMapper: PhotoToDisplayMapper
 ) : ViewModel() {
 
+    private val _pageState = MutableStateFlow<PageState>(PageState.Loading)
+    val pageState: StateFlow<PageState>
+        get() = _pageState
+
     private val _exceptionHandler = CoroutineExceptionHandler { _, _ -> }
     val photos: StateFlow<List<PhotoDisplay>>
         get() = getPhotos().map(photoToDisplayMapper::mapList)
             .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 
     fun search(keyword: String, page: Int) {
-        searchPhotos(SearchPhotoParam(keyword, page)).load(this, _exceptionHandler)
+        viewModelScope.launch(_exceptionHandler) {
+            _pageState.value = PageState.Loading
+            searchPhotos(SearchPhotoParam(keyword, page)).collect()
+            _pageState.value = PageState.Loaded
+        }
     }
 
     fun loadMore() {
