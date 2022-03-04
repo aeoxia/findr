@@ -20,6 +20,11 @@ class PhotoListFragment : Fragment(R.layout.fragment_photo_list)  {
     private val _binding by viewBinding(FragmentPhotoListBinding::bind)
     private val _viewModel by viewModels<PhotoListViewModel>()
 
+    /**
+     * locks the [PhotoListViewModel.loadMore] until [PhotoListAdapter.submitList] is called on UI level
+     * */
+    private var _shouldLoad = true
+
     @Inject
     lateinit var adapter: PhotoListAdapter
 
@@ -47,8 +52,9 @@ class PhotoListFragment : Fragment(R.layout.fragment_photo_list)  {
                                 totalItemCount = layoutManager.itemCount
                                 pastVisibleItems = layoutManager.findFirstVisibleItemPosition()
 
-                                if (_viewModel.pageState.value == PageState.Loading) {
+                                if (_shouldLoad) {
                                     if (visibleItemCount + pastVisibleItems + offset >= totalItemCount) {
+                                        _shouldLoad = false
                                         _viewModel.loadMore()
                                     }
                                 }
@@ -83,7 +89,9 @@ class PhotoListFragment : Fragment(R.layout.fragment_photo_list)  {
         with(_viewModel) {
             _viewModel.search(DEFAULT_KEYWORD, 1)
             photos.observe(this@PhotoListFragment) {
-                adapter.submitList(it)
+                adapter.submitList(it) {
+                    _shouldLoad = true
+                }
             }
             pageState.observe(this@PhotoListFragment) { state ->
                 _binding.viewLoading showIf (state == PageState.Loading)
