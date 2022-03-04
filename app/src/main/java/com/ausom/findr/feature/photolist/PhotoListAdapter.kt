@@ -4,8 +4,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import coil.imageLoader
 import coil.load
+import coil.request.ImageRequest
 import com.ausom.core.utility.DefaultDiffUtil
+import com.ausom.findr.R
 import com.ausom.findr.databinding.ItemPhotoBinding
 import com.ausom.findr.model.PhotoDisplay
 import javax.inject.Inject
@@ -26,7 +29,13 @@ class PhotoListAdapter @Inject constructor(): ListAdapter<PhotoDisplay, PhotoLis
             getItem(position).let { photo ->
                 with(_binding) {
                     txtTitle.text = photo.title
-                    imgPhoto.load(photo.image)
+
+                    val imageContext = imgPhoto.context
+                    imgPhoto.load(photo.image) {
+                        size(256)
+                        placeholder(R.drawable.ic_baseline_image_24)
+                        error(R.drawable.ic_baseline_broken_image_24)
+                    }
                 }
             }
         }

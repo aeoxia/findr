@@ -7,8 +7,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.ausom.core.extension.dpToPx
 import com.ausom.core.extension.observe
 import com.ausom.core.extension.viewBinding
+import com.ausom.core.ui.GridSpacingItemDecoration
 import com.ausom.findr.R
 import com.ausom.findr.databinding.FragmentPhotoListBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -29,6 +31,13 @@ class PhotoListFragment : Fragment(R.layout.fragment_photo_list)  {
         with(_binding) {
             rvPhotoList.adapter = adapter
             with(rvPhotoList) {
+                val spanCount = 3
+                val spacing = 20.dpToPx
+                addItemDecoration(GridSpacingItemDecoration(
+                    spanCount = spanCount,
+                    spacing = spacing,
+                    includeEdge = true
+                ))
                 layoutManager = GridLayoutManager(requireContext(), 3).also { layoutManager ->
                     addOnScrollListener(object : RecyclerView.OnScrollListener() {
                         var pastVisibleItems = 0 //previously visible items on screen
@@ -50,9 +59,8 @@ class PhotoListFragment : Fragment(R.layout.fragment_photo_list)  {
                             }
                         }
                     })
-
-
                 }
+
             }
 
             searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -68,6 +76,7 @@ class PhotoListFragment : Fragment(R.layout.fragment_photo_list)  {
                     return false
                 }
             })
+
         }
         with(_viewModel) {
             photos.observe(this@PhotoListFragment) {

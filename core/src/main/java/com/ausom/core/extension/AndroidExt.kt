@@ -1,6 +1,7 @@
 package com.ausom.core.extension
 
 import android.content.Context
+import android.content.res.Resources
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
@@ -27,3 +28,11 @@ fun Fragment.hideKeyboard() {
         e.printStackTrace()
     }
 }
+
+/**
+ *  Calculates dp to px
+ */
+val Int.dpToPx: Int
+    get() {
+        return (this * Resources.getSystem().displayMetrics.density).toInt()
+    }

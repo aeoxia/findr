@@ -1,5 +1,6 @@
 package com.ausom.core.extension
 
+import android.content.res.Resources
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.format.DateTimeFormatter
 import java.text.DecimalFormat
@@ -36,27 +37,3 @@ fun CharSequence?.toNumberString() : String {
     if(isNullOrEmpty()) return "0"
     return toString().replace(",", "")
 }
-
-/**
- *  Formats [LocalDateTime] to [String] based on given pattern
- *  @param pattern - is the format that will be follow see more here [DateTimeFormatter.ofPattern]
- */
-fun LocalDateTime.toFormattedString(pattern: String = "MM-dd-yyyy HH:mm:ss") : String {
-    if(this == LocalDateTime.MIN) return "N/A"
-    val formatter = DateTimeFormatter.ofPattern(pattern)
-    return format(formatter)
-}
-
-/**
- *  Formats [String] to [LocalDateTime] based on given pattern
- *  @param pattern - is the format that will be follow see more here [DateTimeFormatter.ofPattern]
- */
-fun String.toLocalDateTime(pattern: String = "MM-dd-yyyy HH:mm:ss") : LocalDateTime {
-    val formatter = DateTimeFormatter.ofPattern(pattern)
-    return try {
-        LocalDateTime.parse(this, formatter)
-    } catch (e: Exception) {
-        LocalDateTime.MIN
-    }
-}
-

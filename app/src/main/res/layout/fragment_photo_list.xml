@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/chefs_hat"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
@@ -16,9 +17,11 @@
     <SearchView
         android:id="@+id/search_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:queryHint="Search android, cars, elephant"
         app:layout_constraintTop_toTopOf="@id/bg_toolbar"
+        app:layout_constraintBottom_toBottomOf="@id/bg_toolbar"
+        android:layoutDirection="rtl"
         android:elevation="5dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
